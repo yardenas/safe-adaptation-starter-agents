@@ -11,13 +11,11 @@ setup(
     name='safe_rl',
     packages=['safe_rl'],
     install_requires=[
-        'gym~=0.15.3',
-        'joblib==0.14.0',
+        'joblib',
         'matplotlib==3.1.1',
-        'mpi4py==3.0.2',
-        'mujoco_py==2.0.2.7',
-        'numpy~=1.17.4',
+        'mpi4py',
+        'numpy~=1.22.3',
         'seaborn==0.8.1',
-        'tensorflow==1.13.1',
+        'tensorflow',
     ],
 )

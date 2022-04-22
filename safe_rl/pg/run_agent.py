@@ -1,5 +1,5 @@
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import gym
 import time
 import safe_rl.pg.trust_region as tro
@@ -17,7 +17,7 @@ from safe_rl.utils.mpi_tools import mpi_fork, proc_id, num_procs, mpi_sum
 
 # Multi-purpose agent runner for policy optimization algos 
 # (PPO, TRPO, their primal-dual equivalents, CPO)
-def run_polopt_agent(env_fn, 
+def run_polopt_agent(env,
                      agent=PPOAgent(),
                      actor_critic=mlp_actor_critic, 
                      ac_kwargs=dict(), 
@@ -55,13 +55,10 @@ def run_polopt_agent(env_fn,
     #=========================================================================#
 
     logger = EpochLogger(**logger_kwargs) if logger is None else logger
-    logger.save_config(locals())
 
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
     np.random.seed(seed)
-
-    env = env_fn()
 
     agent.set_logger(logger)
 
@@ -411,9 +408,9 @@ def run_polopt_agent(env_fn,
                 # Reset environment
                 o, r, d, c, ep_ret, ep_len, ep_cost = env.reset(), 0, False, 0, 0, 0, 0
 
-        # Save model
-        if (epoch % save_freq == 0) or (epoch == epochs-1):
-            logger.save_state({'env': env}, None)
+        # # Save model
+        # if (epoch % save_freq == 0) or (epoch == epochs-1):
+        #     logger.save_state({'env': env}, None)
 
         #=====================================================================#
         #  Run RL update                                                      #
