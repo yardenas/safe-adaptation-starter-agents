@@ -47,7 +47,6 @@ def load_policy(fpath, itr='last', deterministic=False):
   get_action = lambda x: sess.run(
       action_op, feed_dict={model['x']: x[None, :]})[0]
 
-  state = joblib.load(osp.join(fpath, 'vars' + itr + '.pkl'))
   robot = extract_by_name(fpath, ['Point', 'Car', 'Doggo'])
   task_name = extract_by_name(fpath, _TASKS.keys())
   env = safe_adaptation_gym.make(task_name, robot)
