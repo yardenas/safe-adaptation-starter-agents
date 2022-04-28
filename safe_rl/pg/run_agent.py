@@ -478,6 +478,7 @@ def run_polopt_agent(env,
 
         # Show results!
         logger.dump_tabular()
+    tf.reset_default_graph()
 
 if __name__ == '__main__':
     import argparse
