@@ -59,6 +59,7 @@ def run_polopt_agent(env,
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
     np.random.seed(seed)
+    env.seed(seed)
 
     agent.set_logger(logger)
 
