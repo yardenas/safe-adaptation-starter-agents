@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import gym
-
 from safe_adaptation_gym import make
+
+import safe_rl
 
 from safe_rl.utils.run_utils import setup_logger_kwargs
 from safe_rl.utils.mpi_tools import mpi_fork
