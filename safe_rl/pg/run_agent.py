@@ -17,7 +17,7 @@ from safe_rl.utils.mpi_tools import mpi_fork, proc_id, num_procs, mpi_sum
 
 # Multi-purpose agent runner for policy optimization algos 
 # (PPO, TRPO, their primal-dual equivalents, CPO)
-def run_polopt_agent(env,
+def run_polopt_agent(env_fn, 
                      agent=PPOAgent(),
                      actor_critic=mlp_actor_critic, 
                      ac_kwargs=dict(), 
@@ -45,7 +45,7 @@ def run_polopt_agent(env,
                      vf_iters=80, 
                      # Logging:
                      logger=None, 
-                     logger_kwargs=dict(), 
+                     logger_kwargs=dict(),
                      save_freq=1
                      ):
 
@@ -59,6 +59,8 @@ def run_polopt_agent(env,
     seed += 10000 * proc_id()
     tf.set_random_seed(seed)
     np.random.seed(seed)
+
+    env = env_fn()
     env.seed(seed)
 
     agent.set_logger(logger)
