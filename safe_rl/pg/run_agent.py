@@ -412,8 +412,8 @@ def run_polopt_agent(env_fn,
                 o, r, d, c, ep_ret, ep_len, ep_cost = env.reset(), 0, False, 0, 0, 0, 0
 
         # # Save model
-        # if (epoch % save_freq == 0) or (epoch == epochs-1):
-        #     logger.save_state({'env': env}, None)
+        if (epoch % save_freq == 0) or (epoch == epochs-1):
+            logger.save_state({'env': env}, None)
 
         #=====================================================================#
         #  Run RL update                                                      #
@@ -480,7 +480,6 @@ def run_polopt_agent(env_fn,
 
         # Show results!
         logger.dump_tabular()
-    tf.reset_default_graph()
 
 if __name__ == '__main__':
     import argparse

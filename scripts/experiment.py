@@ -25,7 +25,8 @@ def main(robot, task, algo, seed, exp_name, cpu):
   # Prepare Logger
   # Algo and Env
   algo_fn = eval('safe_rl.' + algo)
-  exp_name = exp_name or (algo.lower() + '_' + robot.lower() + task.lower())
+  exp_name = exp_name or (algo.lower() + '_' + robot.lower() + '_' +
+                          task.lower())
   logger_kwargs = setup_logger_kwargs(exp_name, seed)
 
   # Algo and Env
@@ -46,7 +47,7 @@ if __name__ == '__main__':
   import argparse
   parser = argparse.ArgumentParser()
   parser.add_argument('--robot', type=str, default='Point')
-  parser.add_argument('--task', type=str, default='Goal1')
+  parser.add_argument('--task', type=str, default='GoToGoal')
   parser.add_argument('--algo', type=str, default='ppo')
   parser.add_argument('--seed', type=int, default=0)
   parser.add_argument('--exp_name', type=str, default='')
