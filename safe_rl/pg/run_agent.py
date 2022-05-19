@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow.compat.v1 as tf
-import gym
 import time
 import safe_rl.pg.trust_region as tro
 from safe_rl.pg.agents import PPOAgent, TRPOAgent, CPOAgent

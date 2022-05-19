@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import joblib
+import glob
 import os
-import os.path as osp
 import tensorflow.compat.v1 as tf
-from safe_adaptation_gym import safe_adaptation_gym
-from safe_adaptation_gym.benchmark import _TASKS
+from gym.wrappers import TimeLimit
+import safe_adaptation_gym
+from safe_adaptation_gym.benchmark import TASKS
 from safe_rl.utils.logx import restore_tf_graph
 
 
@@ -17,22 +17,11 @@ def extract_by_name(string, name_list):
     return ''
 
 
-def load_policy(fpath, itr='last', deterministic=False):
-
-  # handle which epoch to load from
-  if itr == 'last':
-    saves = [
-        int(x[11:])
-        for x in os.listdir(fpath)
-        if 'simple_save' in x and len(x) > 11
-    ]
-    itr = '%d' % max(saves) if len(saves) > 0 else ''
-  else:
-    itr = '%d' % itr
-
+def load_policy(fpath, deterministic=False):
+  params_dir = glob.glob(os.path.join(fpath, '**', 'simple_save*'))[0]
   # load the things!
   sess = tf.Session(graph=tf.Graph())
-  model = restore_tf_graph(sess, osp.join(fpath, 'simple_save' + itr))
+  model = restore_tf_graph(sess, params_dir)
 
   # get the correct op for executing actions
   if deterministic and 'mu' in model.keys():
@@ -48,7 +37,8 @@ def load_policy(fpath, itr='last', deterministic=False):
       action_op, feed_dict={model['x']: x[None, :]})[0]
 
   robot = extract_by_name(fpath, ['Point', 'Car', 'Doggo'])
-  task_name = extract_by_name(fpath, _TASKS.keys())
+  task_name = extract_by_name(fpath, TASKS.keys())
   env = safe_adaptation_gym.make(task_name, robot)
-
-  return env, get_action, sess
+  env = TimeLimit(env, 1000)
+  env.seed(123)
+  return env, get_action, sess, (task_name, robot)

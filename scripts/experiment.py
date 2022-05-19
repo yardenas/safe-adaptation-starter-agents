@@ -32,7 +32,7 @@ def main(robot, task, algo, seed, exp_name, cpu):
   # Algo and Env
   algo = eval('safe_rl.' + algo)
   algo(
-      env_fn=lambda: make(task, robot.lower()),
+      env_fn=lambda: make(robot.lower(), task),
       ac_kwargs=dict(hidden_sizes=(256, 256),),
       epochs=epochs,
       steps_per_epoch=steps_per_epoch,
