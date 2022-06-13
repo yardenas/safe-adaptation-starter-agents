@@ -47,9 +47,9 @@ if __name__ == '__main__':
   import argparse
   parser = argparse.ArgumentParser()
   parser.add_argument('--robot', type=str, default='Point')
-  parser.add_argument('--task', type=str, default='GoToGoal')
+  parser.add_argument('--task', type=str, default='go_to_goal')
   parser.add_argument('--algo', type=str, default='ppo')
-  parser.add_argument('--seed', type=int, default=0)
+  parser.add_argument('--seed', type=int, default=10)
   parser.add_argument('--exp_name', type=str, default='')
   parser.add_argument('--cpu', type=int, default=1)
   args = parser.parse_args()

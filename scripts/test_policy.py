@@ -48,8 +48,7 @@ def run_policy(env,
   frames = []
   while n < num_episodes:
     if render:
-      frames.append(
-          env.unwrapped.render(camera_id='fixedfar', height=480, width=480))
+      frames.append(env.render())
 
     a = get_action(o)
     a = np.clip(a, env.action_space.low, env.action_space.high)

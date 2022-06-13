@@ -38,7 +38,10 @@ def load_policy(fpath, deterministic=False):
 
   robot = extract_by_name(fpath, ['Point', 'Car', 'Doggo'])
   task_name = extract_by_name(fpath, TASKS.keys())
-  env = safe_adaptation_gym.make(task_name, robot)
+  env = safe_adaptation_gym.make(
+      robot,
+      task_name,
+      seed=10,
+      render_options=dict(camera_id='fixedfar', height=480, width=480))
   env = TimeLimit(env, 1000)
-  env.seed(123)
   return env, get_action, sess, (task_name, robot)
